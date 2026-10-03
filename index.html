@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Share Location</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Share Your Location</h1>
+
+    <p>
+        Click the button below to share your current location.
+    </p>
+
+    <button onclick="getLocation()">
+        Share Location
+    </button>
+
+    <div id="result"></div>
+
+
+    <script>
+
+        function getLocation() {
+
+            const result = document.getElementById("result");
+
+            if (!navigator.geolocation) {
+
+                result.innerHTML =
+                    "Your browser does not support location services.";
+
+                return;
+            }
+
+            result.innerHTML =
+                "Requesting location permission...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    const latitude =
+                        position.coords.latitude;
+
+                    const longitude =
+                        position.coords.longitude;
+
+                    const accuracy =
+                        position.coords.accuracy;
+
+
+                    result.innerHTML =
+                        "<h3>Location received!</h3>" +
+
+                        "Latitude: " + latitude +
+                        "<br>" +
+
+                        "Longitude: " + longitude +
+                        "<br>" +
+
+                        "Accuracy: approximately " +
+                        Math.round(accuracy) +
+                        " meters";
+                },
+
+
+                function(error) {
+
+                    result.innerHTML =
+                        "Location permission was denied.";
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+
+            );
+        }
+
+    </script>
+
+</body>
+</html>
